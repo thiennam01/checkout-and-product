@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            #put{
+                z-index:0;
+            }
+            #popup-container{
+                background-color: white;
+                width:50%;
+                margin:auto;
+                margin-top:20%;
+            }
+            #popup-container h1, p{
+                text-align: center;
+            }
+            #popup-container p{
+                margin:auto;
+                width:50%;
+                font-size: 25px;;
+            }
+            .decision{
+                margin:auto;
+                text-align: center;
+                display:flex;
+                justify-content: center;
+                gap:20px;
+            }
+            #popup-container button{
+                padding: 20px;
+                color:white;
+                font-size: 30px;;
+                
+            }
+            .one{
+                background-color: blue;
+            }
+            .two{
+                background-color: red;
+            }
+            #popup-container{
+                margin-top:-200px;
+                padding:50px;
+                z-index:5;
+                background-color: rgb(66, 66, 79);
+            }
+            /* tr,td{
+                border:1px solid black;
+            } */
+             /* Style the tab */
+            .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            /* background-color: #f1f1f1;s */
+            }
+
+            /* Style the buttons that are used to open the tab content */
+            .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            }
+
+            /* Change background color of buttons on hover */
+            .tab button:hover {
+            background-color: #ddd;
+            }
+
+            /* Create an active/current tablink class */
+            .tab button.active {
+            /* background-color: #ccc; */
+            }
+
+            /* Style the tab content */
+            .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+            }
+            .menu tr, td{
+                border:1px solid black;
+                padding:7px;
+            }
+            table{
+                border-collapse: collapse;
+            }
+            .red{
+                background-color: red !important;
+            }
+            button{
+                padding:10px;
+            }
+        </style>
+    </head>
+    <body id="body">
+        <div id="put">
+            <table>
+                <tbody id="menu">
+    
+                </tbody>
+            </table>
+            <div class="tab">
+                <button id="start">bat dau</button>
+                <div id="tab-menu"></div>
+                <button id="end">ket thuc</button>       
+            </div>
+        </div>
+        
+        <div id="popup-container">  
+            <img src="#">
+            <h1>Confirm</h1>
+            <!-- <p>what up?</p> -->
+            <div class="decision">
+                <button class="one" onclick="deleting()">Yes</button>
+                <button class="two" onclick="fixing()">No</button>
+            </div>
+        </div>
+
+            <script src="add.js"></script>
+        <script>
+            
+            let page = 1;
+            function displayRow(page = 1){
+                let item = localStorage.getItem('users');
+                let users = JSON.parse(item);
+
+                let count = Math.ceil(users.length / 5);
+                let tabMenu = document.getElementById('tab-menu');
+
+                for(let j = 0; j < count; j ++){
+                    document.getElementsByClassName('button')[j].classList.remove('red');
+                }
+                document.getElementsByClassName('button')[page - 1].classList.add('red');
+
+                let tbody = document.getElementById('menu');
+                tbody.innerHTML = "";
+
+                for(let i = (page * 5) - 5; i < page * 5; i ++){
+                    let tr = document.createElement('tr');
+                    let td1 = document.createElement('td');
+                    let txt1 = document.createTextNode(users[i].name);
+                    let td2 = document.createElement('td');
+                    let txt2 = document.createTextNode(users[i].price);
+                    let td3 = document.createElement('td');
+                    let button = document.createElement('button');
+                    button.addEventListener('click', function() {
+                        show();
+                    })
+                    
+
+                    td1.appendChild(txt1);
+                    td2.appendChild(txt2);
+                    td3.appendChild(button);
+                    tr.appendChild(td1);
+                    tr.appendChild(td2);
+                    tr.appendChild(td3);
+                    tbody.appendChild(tr);
+                }
+                console.log(page);
+                
+            }
+            
+
+            let item = localStorage.getItem('users');
+            let users = JSON.parse(item);
+
+            let count = Math.ceil(users.length / 5);
+            let tabMenu = document.getElementById('tab-menu');
+            for(let i = 0; i < count; i ++){
+                // let table = document.createElement('table');
+                let button = document.createElement('button');
+                button.classList.add('button');
+                let num = i + 1;
+                button.innerHTML = i + 1;
+                if(i + 1 == page){
+                    button.classList.add('red');
+                }
+                button.addEventListener('click', function(i){
+                    let page = i + 1;
+                    displayRow(num);
+                })
+
+                tabMenu.appendChild(button);
+                
+            }
+            // function pageStart(){
+            //     page = 1;
+            //     displayRow();
+            //     console.log('sdsds');
+            // }
+            let start = document.getElementById('start');
+            start.addEventListener('click', function(){
+                page = 1;
+                displayRow(page);
+            });
+            let end = document.getElementById('end');
+            end.addEventListener('click', function(){
+                // console.log(count)
+                page = count; 
+                displayRow(page);
+            })
+            displayRow();
+            
+        
+        </script>
+    </body>
+</html>
