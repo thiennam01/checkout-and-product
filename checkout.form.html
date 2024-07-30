@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="register.form.css">
+        <style>
+            /* body{
+                background-color: blue;
+            } */
+            #popup-container{
+                background-color: white;
+                width:50%;
+                margin:auto;
+                margin-top:20%;
+            }
+            #popup-container h1, p{
+                text-align: center;
+            }
+            #popup-container p{
+                margin:auto;
+                width:50%;
+                font-size: 25px;;
+            }
+            .decision{
+                margin:auto;
+                text-align: center;
+                display:flex;
+                justify-content: center;
+                gap:20px;
+            }
+            #popup-container button{
+                padding: 20px;
+                color:white;
+                font-size: 30px;;
+                
+            }
+            .one{
+                background-color: blue;
+            }
+            .two{
+                background-color: red;
+            }
+            #popup-container{
+                display:none;
+                transition: 5s;
+            }
+        </style>
+    </head>
+    <body id="body">
+        <div id="put" class="web">
+            <form onclick="return false;">
+                <div class="container">
+                  <label for="product-name"><b>Product Name</b></label>
+                  <input type="text" placeholder="name" name="name" id="name" required>
+                  <label for="product-name"><b>Price</b></label>
+                  <input type="text" placeholder="price" name="price" id="price" required>
+                  <label for="product-name"><b>Reviews</b></label>
+                  <!-- <input type="text" placeholder="review" name="review" id="review" required>
+                  <label for="product-name"><b>Descript</b></label>
+                  <input type="text" placeholder="descript" name="descript" id="descript" required>
+                  <input type="file"> -->
+                  <hr>
+                    <div class="output">
+    
+                    </div>
+                    <img src="" id="preview">
+                  <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+                  <button class="registerbtn" >Add</button>
+                </div>
+            </form>
+                <a href="your.product.html">Your products</a>
+        </div>
+        <div id="popup-container">
+            <img src="#">
+            <h1>Confirm</h1>
+            <p>Are u sure to add this item?</p>
+            <div class="decision">
+                <button class="one" onclick="clear()">No</button>
+                <button class="two" onclick="cancel()">Yes</button>
+            </div>
+        </div>
+        <div class="popup">
+        <!-- <script src="add.js"></script> -->
+        <script>
+            let page = 1;
+function displayRow(page = 1){
+    let item = localStorage.getItem('users');
+    let users = JSON.parse(item);
+
+    let count = Math.ceil(users.length / 5);
+    let tabMenu = document.getElementById('tab-menu');
+
+    for(let j = 0; j < count; j ++){
+        document.getElementsByClassName('button')[j].classList.remove('red');
+    }
+    document.getElementsByClassName('button')[page - 1].classList.add('red');
+
+    let tbody = document.getElementById('menu');
+    tbody.innerHTML = "";
+
+    for(let i = (page * 5) - 5; i < page * 5; i ++){
+        let tr = document.createElement('tr');
+        let td1 = document.createElement('td');
+        let txt1 = document.createTextNode(users[i].name);
+        let td2 = document.createElement('td');
+        let txt2 = document.createTextNode(users[i].price);
+        let td3 = document.createElement('td');
+        let button = document.createElement('button');
+        let text = document.createTextNode('delete');
+        button.appendChild(text);
+        // para = i;
+        
+        button.addEventListener('click', function() {
+            console.log(i);
+            show(i);
+        })
+        console.log(i);
+
+        td1.appendChild(txt1);
+        td2.appendChild(txt2);
+        td3.appendChild(button);
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+        tbody.appendChild(tr);
+    }
+    // console.log(page);
+    
+}
+            function show(i){
+                localStorage.setItem('index-number', i);
+                alert(popup);
+            }
+
+            function cancel(){
+                body.style.backgroundColor = 'white';
+                put.style.display = 'block';
+                popup.style.display = 'none';
+                let name = document.getElementById('name').value;
+                let price = document.getElementById('price').value;
+
+                let obj = {
+                    name : name,
+                    price : price,
+                }
+                if(localStorage.getItem('users') != null){
+                    let users = localStorage.getItem('users');
+                    users = JSON.parse(users);
+                    users.push(obj);
+                    localStorage.setItem('users',JSON.stringify(users));
+                }else{
+                    let users = [];
+                    users.push(obj);
+                    localStorage.setItem('users',JSON.stringify(users));
+                }
+            }
+            function clear(){
+                body.style.backgroundColor = 'white';
+                put.style.display = 'block';
+                popup.style.display = 'none';
+                console.log('enter');
+                // let name = document.getElementById('name').value;
+                // let price = document.getElementById('price').value;
+                // name = "";
+                // price = "";
+            }
+        </script>
+    </body>
+</html>
